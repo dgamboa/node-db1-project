@@ -9,19 +9,27 @@ router.get('/', async (req, res, next) => {
 })
 
 router.get('/:id', (req, res, next) => {
-  // DO YOUR MAGIC
+  try {
+    res.json({ msg: "getbyid" })
+  } catch(err) { next(err) }
 })
 
 router.post('/', (req, res, next) => {
-  // DO YOUR MAGIC
+  try {
+    res.json({ msg: "post" })
+  } catch(err) { next(err) }
 })
 
 router.put('/:id', (req, res, next) => {
-  // DO YOUR MAGIC
+  try {
+    res.json({ msg: "put" })
+  } catch(err) { next(err) }
 });
 
 router.delete('/:id', (req, res, next) => {
-  // DO YOUR MAGIC
+  try {
+    res.json({ msg: "delete" })
+  } catch(err) { next(err) }
 })
 
 router.use((err, req, res, next) => { // eslint-disable-line
