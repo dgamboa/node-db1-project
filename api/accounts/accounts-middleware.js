@@ -1,4 +1,3 @@
-const db = require('../../data/db-config');
 const Account = require('../accounts/accounts-model');
 
 exports.checkAccountPayload = (req, res, next) => {
@@ -13,8 +12,10 @@ exports.checkAccountPayload = (req, res, next) => {
 
 exports.checkAccountNameUnique = async (req, res, next) => {
   try {
-    const result = await db('accounts').where('name', req.body.name);
-    if (result !== []) {
+    const accounts = await Account.getAll();
+    const checkName = accounts.filter(a => a.name === req.body.name);
+    console.log(checkName.length)
+    if (checkName.length !== 0) {
       res.status(500).json({ message: "name should be unique" });
     } else {
       next();

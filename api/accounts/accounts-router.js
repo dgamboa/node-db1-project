@@ -24,9 +24,10 @@ router.post('/', checkAccountPayload, checkAccountNameUnique, async (req, res, n
   } catch(err) { next(err) }
 })
 
-router.put('/:id', checkAccountId, checkAccountNameUnique, (req, res, next) => {
+router.put('/:id', checkAccountPayload, checkAccountId, checkAccountNameUnique, async (req, res, next) => {
   try {
-    res.json({ msg: "put" })
+    const account = await Account.updateById(req.params.id, req.body);
+    res.json(account);
   } catch(err) { next(err) }
 });
 
