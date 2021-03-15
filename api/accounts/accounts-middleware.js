@@ -1,11 +1,30 @@
+const Account = require('../accounts/accounts-model');
+
 exports.checkAccountPayload = (req, res, next) => {
-  // DO YOUR MAGIC
+  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+    res.status(400).json({ message: "missing user data"});
+  } else if (!req.body.budget || !req.body.name) {
+    res.status(400).json({ message: "missing required field"});
+  } else {
+    next();
+  }
 }
 
 exports.checkAccountNameUnique = async (req, res, next) => {
-  // DO YOUR MAGIC
+  try {
+    next()
+  } catch(err) { next(err) }
 }
 
 exports.checkAccountId = async (req, res, next) => {
-  // DO YOUR MAGIC
+  const { id } = req.params;
+  try {
+    const account = await Account.getById(id);
+    if (account) {
+      req.account = account;
+      next();
+    } else {
+      res.status(404).json({ message: "account not found" });
+    }
+  } catch (err) { next(err) }
 }
